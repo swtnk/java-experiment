@@ -17,9 +17,7 @@ public class GenerateRandomImage implements BiFunction<Integer, Integer, Optiona
     private static Random random = new Random();
 
     @Override
-    public Optional<byte[]> apply(
-            @NonNull Integer width,
-            @NonNull Integer height) {
+    public Optional<byte[]> apply(@NonNull Integer width, @NonNull Integer height) {
 
         int quadWidth = width / 2;
         int quadHeight = height / 2;
@@ -60,7 +58,8 @@ public class GenerateRandomImage implements BiFunction<Integer, Integer, Optiona
         return new Color(red, green, blue);
     }
 
-    private static void fillQaud(BufferedImage image, int x, int y, int width, int height, Color color) {
+    private static void fillQaud(BufferedImage image, int x, int y, int width, int height,
+            Color color) {
         for (int yAx = y; yAx < y + height; yAx++) {
             for (int xAx = x; xAx < x + width; xAx++) {
                 image.setRGB(xAx, yAx, color.getRGB());

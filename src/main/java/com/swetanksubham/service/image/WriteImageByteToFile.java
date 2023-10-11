@@ -19,15 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class WriteImageByteToFile implements TriFunction<byte[], String, String, String> {
-    
+
     @Override
-    public String apply(
-            @NonNull final byte[] image,
-            @NonNull final String type,
-            String imagePath) {
+    public String apply(@NonNull final byte[] image, @NonNull final String type, String imagePath) {
 
         String fileName;
-        
+
         if (imagePath == null) {
             fileName = UUID.randomUUID().toString();
         } else {
@@ -36,7 +33,8 @@ public class WriteImageByteToFile implements TriFunction<byte[], String, String,
             fileName = imageFilenameWithExt.substring(0, imageFilenameWithExt.lastIndexOf("."));
         }
 
-        String outPutPath = String.format("src/main/resources/image/generated_%s/%s.png", type, fileName);
+        String outPutPath =
+                String.format("src/main/resources/image/generated_%s/%s.png", type, fileName);
         String outPutFormat = "PNG";
         try {
             ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(image);

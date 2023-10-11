@@ -22,7 +22,7 @@ public class RandomImageGenerator {
         GenerateRandomImage genImage = new GenerateRandomImage();
         WriteImageByteToFile writeImageByteToFile = new WriteImageByteToFile();
         GenerateThumbnailImage generateThumbnailImage = new GenerateThumbnailImage();
-        
+
         log.info("Generating Random Image.");
         Optional<byte[]> image = genImage.apply(1280, 720);
 
