@@ -33,3 +33,10 @@ build/
 
 ### Environment file ###
 .env
+
+## Generated images
+/src/main/resources/image/generated_image/*
+!/src/main/resources/image/generated_image/.gitkeep
+
+/src/main/resources/image/generated_thumb/*
+!/src/main/resources/image/generated_thumb/.gitkeep
