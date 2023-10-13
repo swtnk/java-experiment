@@ -24,7 +24,7 @@ public class RandomImageGenerator {
         GenerateThumbnailImage generateThumbnailImage = new GenerateThumbnailImage();
 
         log.info("Generating Random Image.");
-        Optional<byte[]> image = genImage.apply(1280, 720);
+        Optional<byte[]> image = genImage.apply(600, 800);
 
         image.ifPresentOrElse(data -> {
             this.setOriginalImage(data);

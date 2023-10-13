@@ -11,7 +11,9 @@ import java.util.function.BiFunction;
 import javax.imageio.ImageIO;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GenerateRandomImage implements BiFunction<Integer, Integer, Optional<byte[]>> {
 
     private static Random random = new Random();
@@ -22,31 +24,26 @@ public class GenerateRandomImage implements BiFunction<Integer, Integer, Optiona
         int quadWidth = width / 2;
         int quadHeight = height / 2;
 
-        try {
-            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-            Color red = getRandomColor();
-            Color green = getRandomColor();
-            Color blue = getRandomColor();
-            Color white = getRandomColor();
+        Color red = getRandomColor();
+        Color green = getRandomColor();
+        Color blue = getRandomColor();
+        Color white = getRandomColor();
 
-            fillQaud(image, 0, 0, quadWidth, quadHeight, red);
-            fillQaud(image, quadWidth, 0, quadWidth, quadHeight, blue);
-            fillQaud(image, 0, quadHeight, quadWidth, quadHeight, green);
-            fillQaud(image, quadWidth, quadHeight, quadWidth, quadHeight, white);
+        fillQaud(image, 0, 0, quadWidth, quadHeight, red);
+        fillQaud(image, quadWidth, 0, quadWidth, quadHeight, blue);
+        fillQaud(image, 0, quadHeight, quadWidth, quadHeight, green);
+        fillQaud(image, quadWidth, quadHeight, quadWidth, quadHeight, white);
 
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             ImageIO.write(image, "png", outputStream);
             byte[] imageData = outputStream.toByteArray();
-            outputStream.flush();
-            outputStream.close();
             return Optional.of(imageData);
-
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("Failed to generate random image.", e);
+            return Optional.ofNullable(null);
         }
-
-        return Optional.of(null);
     }
 
     private static Color getRandomColor() {

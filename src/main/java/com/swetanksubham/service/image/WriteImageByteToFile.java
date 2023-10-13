@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WriteImageByteToFile implements TriFunction<byte[], String, String, String> {
 
     @Override
-    public String apply(@NonNull final byte[] image, @NonNull final String type, String imagePath) {
+    public String apply(final byte[] image, @NonNull final String type, String imagePath) {
 
         String fileName;
 
@@ -36,8 +36,7 @@ public class WriteImageByteToFile implements TriFunction<byte[], String, String,
         String outPutPath =
                 String.format("src/main/resources/image/generated_%s/%s.png", type, fileName);
         String outPutFormat = "PNG";
-        try {
-            ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(image);
+        try (ByteArrayInputStream byteArrayImage = new ByteArrayInputStream(image)) {
             BufferedImage bufferedImage = ImageIO.read(byteArrayImage);
             File imageFile = new File(outPutPath);
             ImageOutputStream imageOutputStream = new FileImageOutputStream(imageFile);
@@ -46,8 +45,7 @@ public class WriteImageByteToFile implements TriFunction<byte[], String, String,
             imageOutputStream.close();
             return outPutPath;
         } catch (Exception e) {
-            e.printStackTrace();
-            log.info(e.getMessage());
+            log.info("Failed to write image byte to file.", e);
             return StringUtils.EMPTY;
         }
     }
